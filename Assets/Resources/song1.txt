@@ -1,5 +1,5 @@
 song:A song
-file:S1 test.wav
+file:song1short
 bpm:1
 frequency:1
 0

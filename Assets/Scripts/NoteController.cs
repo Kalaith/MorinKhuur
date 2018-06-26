@@ -25,23 +25,28 @@ public class NoteController : MonoBehaviour {
 
     public GameObject noteHolder;
 
+    bool gameWon;
+    bool gameOver;
+
     // Use this for initialization
-    void Start () {
+    void Start() {
         Debug.Log(PlayerPrefs.GetString("song_choice"));
 
         ls = new LoadSong();
 
-        string songChoice = "assets/resources/"+PlayerPrefs.GetString("song_choice")+".txt";
+        string songChoice = "assets/resources/" + PlayerPrefs.GetString("song_choice") + ".txt";
         ls.loadSong(songChoice);
 
         clip = Resources.Load(ls.filepath, typeof(AudioClip)) as AudioClip;
-        clip = Resources.Load("S1 test") as AudioClip;
-        Debug.Log("Filepath: "+ls.filepath);
+        //clip = Resources.Load("S1 test") as AudioClip;
+        Debug.Log("Filepath: " + ls.filepath);
 
         song = GetComponent<AudioSource>();
         song.clip = clip;
 
         paused = false;
+        timeR = song.clip.length;
+        //song.time = song.clip.length - 10;
         song.Play();
     }
 
@@ -67,11 +72,28 @@ public class NoteController : MonoBehaviour {
 
             }
         }
+
+
+        if(song.time > 0) {
+            timeR = song.clip.length - song.time;
+        }
+
+        Debug.Log("TimeLeft"+(timeR));
+
+        if (timeR== 0) {
+            gameWon = true;
+            // Enable the game won screen, set prefs return to game.
+            Debug.Log("Game Won, Congrats");
+            pauseGame();
+        }
+
         if (Input.GetKeyDown("p") && paused) {
             resumeGame();
         } else if (Input.GetKeyDown("p") && !paused) {
             pauseGame();
         }
+
+
 
     }
 

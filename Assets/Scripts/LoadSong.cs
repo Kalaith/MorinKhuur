@@ -14,7 +14,7 @@ public class LoadSong : ScriptableObject {
     private int noteCount = 0;
 
     public float? getNote() {
-        Debug.Log(noteCount +":"+notes.Count);
+        //Debug.Log(noteCount +":"+notes.Count);
         if(noteCount >= notes.Count) {
             noteCount = 0;
 
@@ -35,22 +35,22 @@ public class LoadSong : ScriptableObject {
                 line = theReader.ReadLine();
                 entries = line.Split(':');
                 songName = entries[1];
-                Debug.Log("songName: "+songName);
+                //Debug.Log("songName: "+songName);
 
                 line = theReader.ReadLine();
                 entries = line.Split(':');
                 filepath = entries[1];
-                Debug.Log("filepath: " + filepath);
+                //Debug.Log("filepath: " + filepath);
 
                 line = theReader.ReadLine();
                 entries = line.Split(':');
                 int.TryParse(entries[1], out bpm);
-                Debug.Log("bpm: " + bpm);
+                //Debug.Log("bpm: " + bpm);
 
                 line = theReader.ReadLine();
                 entries = line.Split(':');
                 int.TryParse(entries[1], out noteFrequency);
-                Debug.Log("noteF: " + noteFrequency);
+                //Debug.Log("noteF: " + noteFrequency);
 
                 // While there's lines left in the text file, do this:
                 do {
