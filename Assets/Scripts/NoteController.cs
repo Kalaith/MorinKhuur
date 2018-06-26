@@ -24,18 +24,24 @@ public class NoteController : MonoBehaviour {
     public GameObject pauseMenu;
 
     public GameObject noteHolder;
+    public GameObject winScreen;
 
     bool gameWon;
     bool gameOver;
 
     // Use this for initialization
     void Start() {
+        startGame();
+    }
+
+    private void startGame() {
         Debug.Log(PlayerPrefs.GetString("song_choice"));
 
         ls = new LoadSong();
 
         string songChoice = "assets/resources/" + PlayerPrefs.GetString("song_choice") + ".txt";
         ls.loadSong(songChoice);
+        
 
         clip = Resources.Load(ls.filepath, typeof(AudioClip)) as AudioClip;
         //clip = Resources.Load("S1 test") as AudioClip;
@@ -69,7 +75,6 @@ public class NoteController : MonoBehaviour {
             if (note != null) {
 
                 createNote("Note" + (song.time), ((float)note - 2.5f), 5.5f, 0, -1.4f, Note.direction.DOWN, Note.noteType.SHORT);
-
             }
         }
 
@@ -80,11 +85,14 @@ public class NoteController : MonoBehaviour {
 
         Debug.Log("TimeLeft"+(timeR));
 
-        if (timeR== 0) {
+        if (timeR < 0.01) {
             gameWon = true;
             // Enable the game won screen, set prefs return to game.
             Debug.Log("Game Won, Congrats");
-            pauseGame();
+            paused = true;
+            Time.timeScale = 0.0f;
+            winScreen.SetActive(true);
+
         }
 
         if (Input.GetKeyDown("p") && paused) {
@@ -95,6 +103,23 @@ public class NoteController : MonoBehaviour {
 
 
 
+    }
+
+    public void restart() {
+        paused = false;
+        Time.timeScale = 1;
+
+        // Find all notes and destroy them before restarting
+        GameObject[] notes = GameObject.FindGameObjectsWithTag("Note");
+
+        foreach(GameObject note in notes) {
+
+            Destroy(note);
+
+        }
+        winScreen.SetActive(false);
+
+        startGame();
     }
 
     public void pauseGame() {
@@ -112,6 +137,8 @@ public class NoteController : MonoBehaviour {
     }
 
     public void exitGame() {
+        ls = null;
+        Time.timeScale = 1;
         SceneManager.LoadScene("Menu");
     }
 }

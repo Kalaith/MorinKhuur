@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoadingScript : MonoBehaviour {
 
@@ -14,8 +15,13 @@ public class LoadingScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        
+    }
 
-	}
+    public IEnumerator loadGame() {
+        yield return new WaitForSeconds(45);
+        SceneManager.LoadScene("Game");
+    }
 	
 	// Update is called once per frame
 	void Update () {

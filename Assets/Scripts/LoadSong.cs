@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
-public class LoadSong : ScriptableObject {
+public class LoadSong {
 
     public string songName;
     public string filepath;
@@ -45,21 +44,21 @@ public class LoadSong : ScriptableObject {
                 line = theReader.ReadLine();
                 entries = line.Split(':');
                 int.TryParse(entries[1], out bpm);
-                //Debug.Log("bpm: " + bpm);
 
                 line = theReader.ReadLine();
                 entries = line.Split(':');
                 int.TryParse(entries[1], out noteFrequency);
-                //Debug.Log("noteF: " + noteFrequency);
 
                 // While there's lines left in the text file, do this:
                 do {
                     line = theReader.ReadLine();
-                    if (line.Length == 0) {
-                        notes.Add(null);
-                    } else {
-                        notes.Add(float.Parse(line));
-                        //Debug.Log("Line:"+line);
+                    if (line != null) {
+                        if (line.Length == 0) {
+                            notes.Add(null);
+                        } else {
+                            notes.Add(float.Parse(line));
+                            //Debug.Log("Line:"+line);
+                        }
                     }
                     
                 }
@@ -68,7 +67,7 @@ public class LoadSong : ScriptableObject {
                 theReader.Close();
             }
         } catch (System.Exception e) {
-            Debug.Log("Load file error: "+e);
+            return false;
         }
         return true;
     }
