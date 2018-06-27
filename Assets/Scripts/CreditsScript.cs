@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadingScript : MonoBehaviour {
+public class CreditsScript : MonoBehaviour {
 
     public GameObject Background;
     public GameObject Foreground;
@@ -15,26 +15,12 @@ public class LoadingScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        string mode = PlayerPrefs.GetString("loading");
-        //Debug.Log("Mode: "+mode);
-        if(mode.Equals("credits")) {
-            StartCoroutine(loadCredits());
-            //Debug.Log("Credits: " + mode);
-        }
-        else if (mode.Equals("load")) {
-            StartCoroutine(loadGame());
-        }
-
+        loadCredits();
     }
 
     public IEnumerator loadCredits() {
         yield return new WaitForSeconds(45);
         SceneManager.LoadScene("Menu");
-    }
-
-    public IEnumerator loadGame() {
-        yield return new WaitForSeconds(5);
-        SceneManager.LoadScene("Game");
     }
 	
 	// Update is called once per frame
