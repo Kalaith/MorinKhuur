@@ -21,6 +21,7 @@ public class MenuScript : MonoBehaviour {
             buttonImages[1].SetActive(true);
             buttons[0].SetActive(true);
             target = Quaternion.Euler(0, 0, 45);
+            
         }
         if (val > 0.85 && val <= 1.39) {
             buttonImages[2].SetActive(false);
@@ -95,7 +96,7 @@ public class MenuScript : MonoBehaviour {
     }
     public void button2Clicked() {
         Debug.Log("button2Clicked");
-        PlayerPrefs.SetString("song_choice", "song2");
+        PlayerPrefs.SetString("song_choice", "1 mapped demo");
         PlayerPrefs.SetString("loading", "load");
         StartCoroutine(loadScene("Loading"));
     }
@@ -126,6 +127,10 @@ public class MenuScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         wheel.transform.rotation = Quaternion.Slerp(wheel.transform.rotation, target, Time.deltaTime);
+
+        //if(Input.GetMouseButtonUp(0) && slide.value <= 0.85) {
+        //    button1Clicked();
+        //}
 
     }
 
