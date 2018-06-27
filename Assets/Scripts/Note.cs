@@ -22,8 +22,8 @@ public class Note : MonoBehaviour
         Name = n;
         this.name = n;
         this.tag = "Note";
-        this.transform.SetPositionAndRotation(new Vector3(width, height, -1), Quaternion.Euler(0, 0, rotation));
-        this.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
+        this.transform.SetPositionAndRotation(new Vector3(width, height, -5), Quaternion.Euler(0, 0, rotation));
+        this.transform.localScale = new Vector3(0.4f, 0.4f, 1f);
         Width = width;
         Height = height;
         Rotation = rotation;
@@ -60,9 +60,8 @@ public class Note : MonoBehaviour
         {
             Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
-            Debug.Log(hit.collider.name);
-      
-            if (hit.collider.enabled && hit.collider.name == Name)
+
+            if (hit.collider != null && hit.collider.name == Name)
             {
                 Debug.Log("Correct " + hit.collider.name);
                 Destroy(gameObject);

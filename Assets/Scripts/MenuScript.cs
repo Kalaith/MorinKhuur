@@ -2,54 +2,66 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 public class MenuScript : MonoBehaviour {
 
+    public GameObject[] buttons;
+    public Slider slide;
     public GameObject wheel;
-    public bool startRotation = false;
-    public bool rotationFinished = true;
-    public float rotation = 180;
-    public float dampen = 0.5f;
+    public float angle = 0.0f;
+    Quaternion target;
+    public void sliderValue()   {
+        int val = (int)slide.value;
+        Debug.Log(val);
+        resetAnim();
 
-    // 
+        switch (val) {
+            case 0:
+                buttons[0].SetActive(false);
+                buttons[1].SetActive(true);
+                target = Quaternion.Euler(0,0,45);
+                break;
+            case 1:
+                buttons[2].SetActive(false);
+                buttons[3].SetActive(true);
+                target = Quaternion.Euler(0, 0, 0);
+                break;
+            case 2:
+                buttons[4].SetActive(false);
+                buttons[5].SetActive(true);
+                target = Quaternion.Euler(0, 0, -45);
+                break;
+            case 3:
+                buttons[6].SetActive(false);
+                buttons[7].SetActive(true);
+                target = Quaternion.Euler(0, 0, -90);
+                break;
+        }
+    }
 
-	// Use this for initialization
+    private void resetAnim() {
+        buttons[0].SetActive(true);
+        buttons[1].SetActive(false);
+        buttons[2].SetActive(true);
+        buttons[3].SetActive(false);
+        buttons[4].SetActive(true);
+        buttons[5].SetActive(false);
+        buttons[6].SetActive(true);
+        buttons[7].SetActive(false);
+
+    }
+    
+    // Use this for initialization
 	void Start () {
-	}
+        slide.onValueChanged.AddListener(delegate { sliderValue();});
+        sliderValue();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		if(startRotation)
-        {
-            Quaternion target = Quaternion.Euler(0, 0, rotation);
+        wheel.transform.rotation = Quaternion.Slerp(wheel.transform.rotation, target, Time.deltaTime);
 
-            // Dampen towards the target rotation
-            wheel.transform.rotation = Quaternion.Slerp(wheel.transform.rotation, target, Time.deltaTime);
-        }
-	}
-
-    public void loadMenu()
-    {
-        if (rotationFinished == true)
-        {
-            rotation = 90;
-            startRotation = true;
-        }
     }
 
-    // rotate the wheel then load the game
-    public void startGame()
-    {
-        if (rotationFinished == true)
-        {
-            rotation = 180;
-            startRotation = true;
-        }
-
-        //yield return new WaitForSeconds(3);
-        PlayerPrefs.SetString("song_choice", "song1");
-        SceneManager.LoadScene("Game");
-    }
-
-    // After start is pressed we want to rotate 1 degree every frame to 180, after the rotation has finished we display the difficulty
 }
