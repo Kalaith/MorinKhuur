@@ -17,6 +17,8 @@ public class Note : MonoBehaviour
 
     public enum noteType { SHORT = 0, LONG = 1}
     private noteType Type;
+    private bool scored;
+
     public void initNote(string n, float width, float height, float rotation, float fs, direction dir, noteType nt)
     {
         Name = n;
@@ -64,6 +66,11 @@ public class Note : MonoBehaviour
             if (hit.collider != null && hit.collider.name == Name)
             {
                 Debug.Log("Correct " + hit.collider.name);
+                // Increase score for the level
+                if(!scored) {
+
+                }
+                PlayerPrefs.SetInt("score", PlayerPrefs.GetInt("score") + 1);
                 Destroy(gameObject);
             }
         }
@@ -74,12 +81,14 @@ public class Note : MonoBehaviour
     {
         Debug.Log("triggered");
         touchable = true;
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         touchable = false;
         Debug.Log("remove object");
+
         Destroy(gameObject);
     }
 }

@@ -1,10 +1,20 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 public class NoteController : MonoBehaviour {
+
+    public AudioClip songClip1;
+    public AudioClip songClip2;
+    public AudioClip songClip3;
+    public TextAsset lsFile1;
+    public TextAsset lsFile2;
+    public TextAsset lsFile3;
+
+    public Text scoreText;
 
     public enum DIFFICULTY { EASY = 0, MEDIUMN = 1, HARD = 2 };
     public AudioSource song;
@@ -19,15 +29,16 @@ public class NoteController : MonoBehaviour {
     const float fallSpeed = -1.4f;
     public int noteCount = 0;
     private LoadSong ls;
-    public AudioClip clip;
+
     public bool paused;
     public GameObject pauseMenu;
-
+    private AudioClip clip;
     public GameObject noteHolder;
     public GameObject winScreen;
 
     bool gameWon;
     bool gameOver;
+    private bool highScore;
 
     // Use this for initialization
     void Start() {
@@ -36,16 +47,32 @@ public class NoteController : MonoBehaviour {
 
     private void startGame() {
         Debug.Log(PlayerPrefs.GetString("song_choice"));
-
+        TextAsset lsFile = null;
         ls = new LoadSong();
+        string songChoice = PlayerPrefs.GetString("song_choice");
+        if(songChoice.Equals("song1")) {
+            clip = songClip1;
+            lsFile = lsFile1;
+        }
+        if (songChoice.Equals("song2")) {
+            clip = songClip2;
+            lsFile = lsFile2;
+        }
+        if (songChoice.Equals("song3")) {
+            clip = songClip3;
+            lsFile = lsFile3;
+        }
+  
+        ls.loadSong(lsFile);
+        //clip = Resources.Load(ls.filePath, typeof(AudioClip)) as AudioClip;
+        //text.text = "Path:" + ls.filepath;
 
-        string songChoice = "assets/resources/" + PlayerPrefs.GetString("song_choice") + ".txt";
-        ls.loadSong(songChoice);
-        
-
-        clip = Resources.Load(ls.filepath, typeof(AudioClip)) as AudioClip;
         //clip = Resources.Load("S1 test") as AudioClip;
         Debug.Log("Filepath: " + ls.filepath);
+        clip.LoadAudioData();
+        do {
+            Debug.Log("Loading Song Clip");
+        } while (clip.loadState != AudioDataLoadState.Loaded);
 
         song = GetComponent<AudioSource>();
         song.clip = clip;
@@ -73,7 +100,6 @@ public class NoteController : MonoBehaviour {
             timeRemaining = 0;
             float? note = ls.getNote();
             if (note != null) {
-
                 createNote("Note" + (song.time), ((float)note - 2.5f), 5.5f, 0, -1.4f, Note.direction.DOWN, Note.noteType.SHORT);
             }
         }
@@ -89,6 +115,22 @@ public class NoteController : MonoBehaviour {
             gameWon = true;
             // Enable the game won screen, set prefs return to game.
             Debug.Log("Game Won, Congrats");
+            Debug.Log("High Score" +PlayerPrefs.GetInt("high_score_" + PlayerPrefs.GetInt("song_choice")));
+            Debug.Log("Score"+ PlayerPrefs.GetInt("score"));
+            Debug.Log("Max Score" + PlayerPrefs.GetInt("max_score"));
+
+            int score = PlayerPrefs.GetInt("score") - PlayerPrefs.GetInt("max_score");
+            if (PlayerPrefs.GetInt("score") > PlayerPrefs.GetInt("high_score_"+PlayerPrefs.GetInt("song_choice"))) {
+                PlayerPrefs.SetInt("high_score_" + PlayerPrefs.GetInt("song_choice"), PlayerPrefs.GetInt("score"));
+                highScore = true;
+            }
+
+            if(highScore) {
+                scoreText.text = "Score: " + PlayerPrefs.GetInt("score") + "/" + PlayerPrefs.GetInt("max_score")+" <b>* NEW RECORD</b>";
+            } else {
+                scoreText.text = "Score: " + PlayerPrefs.GetInt("score") + "/" + PlayerPrefs.GetInt("max_score"); 
+            }
+
             paused = true;
             Time.timeScale = 0.0f;
             winScreen.SetActive(true);
