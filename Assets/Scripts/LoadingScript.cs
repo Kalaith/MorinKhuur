@@ -13,8 +13,15 @@ public class LoadingScript : MonoBehaviour {
     public float fgSpeed;
     public float buildSpeed;
 
+	AudioSource audio;
+	public AudioClip song; 
+
 	// Use this for initialization
 	void Start () {
+		audio = this.GetComponent<AudioSource> ();
+		audio.loop = true;
+		audio.Play ();
+
         string mode = PlayerPrefs.GetString("loading");
         //Debug.Log("Mode: "+mode);
         if(mode.Equals("credits")) {
