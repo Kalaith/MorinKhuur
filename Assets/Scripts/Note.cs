@@ -19,6 +19,9 @@ public class Note : MonoBehaviour
     private noteType Type;
     private bool scored;
 
+    private bool isDestroyed = false;
+    public float shrinkSpeed = 0.3f;
+
     public void initNote(string n, float width, float height, float rotation, float fs, direction dir, noteType nt)
     {
         Name = n;
@@ -56,9 +59,20 @@ public class Note : MonoBehaviour
             mouseDown = false;
         }
 
+        if(isDestroyed) {
+            transform.localScale = new Vector3(transform.localScale.x - (shrinkSpeed * Time.deltaTime),
+                transform.localScale.y - (shrinkSpeed * Time.deltaTime), transform.localScale.z);
+
+            if (transform.localScale.x <= 0 || transform.localScale.y <= 0) {
+                Destroy(this);
+            }
+        }
+
+        
+
         //  Debug.Log("min " + s.bounds.min.y+" Max "+s.bounds.max.y);
 
-        if (mouseDown && touchable)
+        if (mouseDown && touchable && !isDestroyed)
         {
             Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
@@ -71,7 +85,8 @@ public class Note : MonoBehaviour
 
                 }
                 PlayerPrefs.SetInt("score", PlayerPrefs.GetInt("score") + 1);
-                Destroy(gameObject);
+                isDestroyed = true;
+                //Destroy(gameObject);
             }
         }
 

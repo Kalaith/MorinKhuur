@@ -7,12 +7,16 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class NoteController : MonoBehaviour {
 
+    public AudioClip winClip;
+
     public AudioClip songClip1;
     public AudioClip songClip2;
     public AudioClip songClip3;
     public TextAsset lsFile1;
     public TextAsset lsFile2;
     public TextAsset lsFile3;
+
+    public Image bgMusic;
 
     public Text scoreText;
 
@@ -39,6 +43,7 @@ public class NoteController : MonoBehaviour {
     bool gameWon;
     bool gameOver;
     private bool highScore;
+    private float pos;
 
     // Use this for initialization
     void Start() {
@@ -91,16 +96,31 @@ public class NoteController : MonoBehaviour {
         
         noteS.initNote(v1, v2, v3, v4, v5, dir, type);
     }
-
+    float rotSpeed = 0.5f;
     // Update is called once per frame
     void Update() {
+
+        bgMusic.transform.position = new Vector3(bgMusic.transform.position.x, (Mathf.Sin(pos) / 3), bgMusic.transform.position.z);
+        bgMusic.transform.Rotate(0, 0, rotSpeed * Time.deltaTime, 0);
+        pos += 0.004f;
+
         timeRemaining += Time.deltaTime;
         if (timeRemaining > interval) {
 
             timeRemaining = 0;
             float? note = ls.getNote();
             if (note != null) {
-                createNote("Note" + (song.time), ((float)note - 2.5f), 5.5f, 0, -1.4f, Note.direction.DOWN, Note.noteType.SHORT);
+                if (PlayerPrefs.GetString("song_choice") == "song1") {
+                    createNote("Note" + (song.time), ((float)note - 2.5f), 5.5f, 0, -1.4f, Note.direction.DOWN, Note.noteType.SHORT);
+                }
+                if (PlayerPrefs.GetString("song_choice") == "song2") {
+                    createNote("Note" + (song.time), ((float)note - 2.5f), 5.5f, 0, -1.0f, Note.direction.DOWN, Note.noteType.SHORT);
+                }
+                if (PlayerPrefs.GetString("song_choice") == "song3") {
+                    createNote("Note" + (song.time), ((float)note - 2.5f), 5.5f, 0, -2.96f, Note.direction.DOWN, Note.noteType.SHORT);
+
+                }
+                //createNote("Note" + (song.time), ((float)note - 2.5f), 5.5f, 0, -1.4f, Note.direction.DOWN, Note.noteType.SHORT);
             }
         }
 
@@ -111,7 +131,9 @@ public class NoteController : MonoBehaviour {
 
         Debug.Log("TimeLeft"+(timeR));
 
-        if (timeR < 0.01) {
+        if (timeR < 0.01 && !gameWon) {
+            song.clip = winClip;
+            song.Play(0);
             gameWon = true;
             // Enable the game won screen, set prefs return to game.
             Debug.Log("Game Won, Congrats");
@@ -149,6 +171,7 @@ public class NoteController : MonoBehaviour {
 
     public void restart() {
         paused = false;
+        gameWon = false;
         Time.timeScale = 1;
 
         // Find all notes and destroy them before restarting

@@ -18,29 +18,32 @@ public class LoadingScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        
 		audio = this.GetComponent<AudioSource> ();
 		audio.loop = true;
 		audio.Play ();
+        audio.volume = 0.75f;
 
         string mode = PlayerPrefs.GetString("loading");
         //Debug.Log("Mode: "+mode);
         if(mode.Equals("credits")) {
-            StartCoroutine(loadCredits());
+            Invoke("loadCredits", 47);
             //Debug.Log("Credits: " + mode);
         }
         else if (mode.Equals("load")) {
-            StartCoroutine(loadGame());
+            Invoke("loadGame", 5);
+            //StartCoroutine(loadGame());
         }
 
     }
 
-    public IEnumerator loadCredits() {
-        yield return new WaitForSeconds(45);
+    public void loadCredits() {
+        //yield return new WaitForSeconds(45);
         SceneManager.LoadScene("Menu");
     }
 
-    public IEnumerator loadGame() {
-        yield return new WaitForSeconds(5);
+    public void loadGame() {
+        //yield return new WaitForSeconds(5);
         SceneManager.LoadScene("Game");
     }
 	

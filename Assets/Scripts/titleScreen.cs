@@ -41,14 +41,14 @@ public class titleScreen : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 		pos += 0.004f;
-		yurt.transform.position = new Vector3 (0.0f, (Mathf.Sin(pos)/5)+2.5f, 0.0f);
+		yurt.transform.position = new Vector3 (0.0f, (Mathf.Sin(pos)/3)+2.5f, 0.0f);
 
 		note1.transform.position = new Vector3 (note1.transform.position.x, Mathf.Sin(-pos)/2 + 2.0f, 0.0f);
 		note2.transform.position = new Vector3 (note2.transform.position.x, Mathf.Sin(pos)/3 + 2.5f, 0.0f);
 		note3.transform.position = new Vector3 (note3.transform.position.x, Mathf.Sin(-pos)/3 + 3.3f, 0.0f);
 		note4.transform.position = new Vector3 (note4.transform.position.x, Mathf.Sin(pos)/3 + 1.8f, 0.0f);
 
-        text.transform.position = new Vector3(text.transform.position.x, Mathf.Sin(pos)/5 - 0.7f, 0.0f);
+        text.transform.position = new Vector3(text.transform.position.x, Mathf.Sin(pos)/3 - 0.7f, 0.0f);
         if(fade) {
             alpha += fadeSpeed * Time.deltaTime;
             fadeToBlack.color = new Color(fadeToBlack.color.r, fadeToBlack.color.g, fadeToBlack.color.b, alpha);
