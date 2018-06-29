@@ -11,8 +11,14 @@ public class SkinSelectScript : MonoBehaviour {
     public int skinSelect = 0;
     public int maxSkins = 0;
 
-	// Use this for initialization
-	void Start () {
+    AudioSource audio;
+    public AudioClip drumSound;
+    public AudioClip stringSound;
+
+    // Use this for initialization
+    void Start () {
+        audio = GetComponent<AudioSource>();
+
         skinSelect = PlayerPrefs.GetInt("skin");
         selectedSkin.sprite = sprites[skinSelect];
 
@@ -36,8 +42,13 @@ public class SkinSelectScript : MonoBehaviour {
         selectedSkin.sprite = sprites[skinSelect];
     }
 
-    public void backToMenu() {
+    public void moveToMenu() {
         PlayerPrefs.SetInt("skin", skinSelect);
         SceneManager.LoadScene("Menu");
+    }
+
+    public void backToMenu() {
+        audio.PlayOneShot(drumSound);
+        Invoke("moveToMenu", 2.2f);
     }
 }

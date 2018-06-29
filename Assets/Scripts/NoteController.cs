@@ -54,22 +54,30 @@ public class NoteController : MonoBehaviour {
     }
 
     private void startGame() {
-        selectedMK.sprite = mkSprites[PlayerPrefs.GetInt("skin")];
+
+        int skin = PlayerPrefs.GetInt("skin");
+        if(skin < 0 || skin > 2) {
+            skin = 0;
+        }
+
+        selectedMK.sprite = mkSprites[skin];
         Debug.Log(PlayerPrefs.GetString("song_choice"));
         TextAsset lsFile = null;
         ls = new LoadSong();
         string songChoice = PlayerPrefs.GetString("song_choice");
+        
         if(songChoice.Equals("song1")) {
             clip = songClip1;
             lsFile = lsFile1;
-        }
-        if (songChoice.Equals("song2")) {
+        }else if (songChoice.Equals("song2")) {
             clip = songClip2;
             lsFile = lsFile2;
-        }
-        if (songChoice.Equals("song3")) {
+        }else if (songChoice.Equals("song3")) {
             clip = songClip3;
             lsFile = lsFile3;
+        } else {
+            clip = songClip1;
+            lsFile = lsFile1;
         }
   
         ls.loadSong(lsFile);

@@ -94,7 +94,6 @@ public class MenuScript : MonoBehaviour {
         audioSource.clip = buttonSound;
         audioSource.Play();
         Debug.Log("button1Clicked");
-        PlayerPrefs.SetString("song_choice", "song1");
         PlayerPrefs.SetString("loading", "load");
         StartCoroutine(loadScene("Loading"));
         
@@ -103,17 +102,13 @@ public class MenuScript : MonoBehaviour {
         audioSource.clip = buttonSound;
         audioSource.Play();
         Debug.Log("button2Clicked");
-        PlayerPrefs.SetString("song_choice", "song2");
-        PlayerPrefs.SetString("loading", "load");
-        StartCoroutine(loadScene("Loading"));
+        StartCoroutine(loadScene("MKSkin"));
     }
     public void button3Clicked() {
         audioSource.clip = buttonSound;
         audioSource.Play();
         Debug.Log("button3Clicked");
-        PlayerPrefs.SetString("song_choice", "song3");
-        PlayerPrefs.SetString("loading", "load");
-        StartCoroutine(loadScene("Loading"));
+        StartCoroutine(loadScene("SongSelect"));
     }
     public void button4Clicked() {
         audioSource.clip = buttonSound;
@@ -142,6 +137,10 @@ public class MenuScript : MonoBehaviour {
 
         audioSource = GetComponent<AudioSource>();
 
+    }
+
+    public void goback() {
+        SceneManager.LoadScene("Title");
     }
 	
 	// Update is called once per frame

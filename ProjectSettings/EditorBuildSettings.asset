@@ -23,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: 648d65130246e4b42a638e8b198ae88e
+  - enabled: 1
+    path: Assets/Scenes/MKSkin.unity
+    guid: 59587c1e6057e0a468065b41fc6af885
+  - enabled: 1
+    path: Assets/Scenes/SongSelect.unity
+    guid: 4e1c7b3691678ef46ac5709be7aed10f
   m_configObjects: {}
