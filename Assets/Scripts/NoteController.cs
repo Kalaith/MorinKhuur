@@ -7,8 +7,11 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class NoteController : MonoBehaviour {
 
+    // Clip when won
     public AudioClip winClip;
-
+    public Sprite[] mkSprites;
+    public Image selectedMK;
+    // Clips and Files for each song, set in 
     public AudioClip songClip1;
     public AudioClip songClip2;
     public AudioClip songClip3;
@@ -51,6 +54,7 @@ public class NoteController : MonoBehaviour {
     }
 
     private void startGame() {
+        selectedMK.sprite = mkSprites[PlayerPrefs.GetInt("skin")];
         Debug.Log(PlayerPrefs.GetString("song_choice"));
         TextAsset lsFile = null;
         ls = new LoadSong();
@@ -129,7 +133,7 @@ public class NoteController : MonoBehaviour {
             timeR = song.clip.length - song.time;
         }
 
-        Debug.Log("TimeLeft"+(timeR));
+        //Debug.Log("TimeLeft"+(timeR));
 
         if (timeR < 0.01 && !gameWon) {
             song.clip = winClip;

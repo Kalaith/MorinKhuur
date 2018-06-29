@@ -50,9 +50,10 @@ public class Note : MonoBehaviour
     {
         transform.position += new Vector3(0, fallingSpeed * Time.deltaTime, 0);
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             mouseDown = true;
+            Debug.Log(Name+" says this note is down");
         }
         if (Input.GetMouseButtonUp(0))
         {

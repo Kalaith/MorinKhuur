@@ -185,7 +185,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &50784418
 GameObject:
@@ -379,12 +379,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 125413416}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.1501203, y: -0.26883897, z: 0.43562797}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.1501203, y: -0.26883897, z: 0.435628}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &163085694
 GameObject:
@@ -781,6 +781,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winClip: {fileID: 8300000, guid: 2236ba34f7dbb594b8784f95e6f59fe4, type: 3}
+  mkSprites:
+  - {fileID: 21300000, guid: c65a69463db3ed042ab2e4afe9f3cb46, type: 3}
+  - {fileID: 21300000, guid: 69adbda42b814ee46b7f54a3b4f4c18a, type: 3}
+  - {fileID: 21300000, guid: 01c9be49c4505bd458fe63ab4b64af88, type: 3}
+  selectedMK: {fileID: 914159228}
   songClip1: {fileID: 8300000, guid: 9f5ad3ea20b85814c86771c69316c20e, type: 3}
   songClip2: {fileID: 8300000, guid: 5b72a9ab909ef634e988fcafbe6f9769, type: 3}
   songClip3: {fileID: 8300000, guid: 3051f7b8e42d3c44f99af1a50863e622, type: 3}

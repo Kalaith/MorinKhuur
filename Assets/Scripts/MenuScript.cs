@@ -20,25 +20,25 @@ public class MenuScript : MonoBehaviour {
         Debug.Log(val);
         resetButtons();
 
-        if (val <= 0.85) {
+        if (val == 0) {
             buttonImages[0].SetActive(false);
             buttonImages[1].SetActive(true);
             buttons[0].SetActive(true);
             target = Quaternion.Euler(0, 0, 45);
         }
-        if (val > 0.85 && val <= 1.39) {
+        if (val == 1) {
             buttonImages[2].SetActive(false);
             buttonImages[3].SetActive(true);
             buttons[1].SetActive(true);
             target = Quaternion.Euler(0, 0, 0);
         }
-        if (val > 1.39 && val <= 1.95) {
+        if (val == 2) {
             buttonImages[4].SetActive(false);
             buttonImages[5].SetActive(true);
             buttons[2].SetActive(true);
             target = Quaternion.Euler(0, 0, -45);
         }
-        if (val > 1.95) {
+        if (val == 3) {
             buttonImages[6].SetActive(false);
             buttonImages[7].SetActive(true);
             buttons[3].SetActive(true);
