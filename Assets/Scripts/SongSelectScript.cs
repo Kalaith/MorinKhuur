@@ -41,7 +41,7 @@ public class SongSelectScript : MonoBehaviour {
         PlayerPrefs.SetString("song_choice", "song1");
         buttonImages[4].enabled = true;
         buttonImages[5].enabled = false;
-        Debug.Log("choice1");
+        //Debug.Log("choice1");
     }
     public void setSong2() {
         //audio.PlayOneShot(selectSound);
@@ -49,7 +49,7 @@ public class SongSelectScript : MonoBehaviour {
         PlayerPrefs.SetString("song_choice", "song2");
         buttonImages[3].enabled = false;
         buttonImages[2].enabled = true;
-        Debug.Log("choice2");
+        //Debug.Log("choice2");
     }
     public void setSong3() {
         //audio.PlayOneShot(selectSound);
@@ -57,7 +57,7 @@ public class SongSelectScript : MonoBehaviour {
         PlayerPrefs.SetString("song_choice", "song3");
         buttonImages[0].enabled = true;
         buttonImages[1].enabled = false;
-        Debug.Log("choice3");
+        //Debug.Log("choice3");
     }
     public void resetButtons() {
         foreach(Image image in buttonImages) {

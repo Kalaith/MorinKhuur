@@ -38,34 +38,48 @@ public class NoteController : MonoBehaviour {
     private LoadSong ls;
 
     public bool paused;
-    public GameObject pauseMenu;
-    private AudioClip clip;
-    public GameObject noteHolder;
-    public GameObject winScreen;
+    public GameObject pauseMenu; // Panel to display when pausing the game, can resume, exit
+    public GameObject winScreen; // Panel to display when game is won, can restart
+
+    private AudioClip clip; // the audio clip we are loading into the audio source
+    public GameObject noteHolder; // holds all our created notes
+
 
     bool gameWon;
     bool gameOver;
     private bool highScore;
     private float pos;
 
+    // How fast the background rotates
+    float rotSpeed = 0.5f;
+    //ParticleSystem particleSystem;
+
+    //public GameObject sphere;
+
     // Use this for initialization
     void Start() {
         startGame();
+        //particleSystem = GetComponent<ParticleSystem>();
     }
 
     private void startGame() {
 
+       // sphere.SetActive(false);
+
+        // Get the skin and set to delfault if not found.
         int skin = PlayerPrefs.GetInt("skin");
         if(skin < 0 || skin > 2) {
             skin = 0;
         }
-
+        // Assign the skin to the morin khuur sprite
         selectedMK.sprite = mkSprites[skin];
-        Debug.Log(PlayerPrefs.GetString("song_choice"));
+
+        // Get the notes from each indiv song
         TextAsset lsFile = null;
         ls = new LoadSong();
         string songChoice = PlayerPrefs.GetString("song_choice");
         
+        // Since we had resource folder problems we define the song and file when starting
         if(songChoice.Equals("song1")) {
             clip = songClip1;
             lsFile = lsFile1;
@@ -78,19 +92,18 @@ public class NoteController : MonoBehaviour {
         } else {
             clip = songClip1;
             lsFile = lsFile1;
+            PlayerPrefs.SetString("song_choice", "song1");
         }
   
         ls.loadSong(lsFile);
-        //clip = Resources.Load(ls.filePath, typeof(AudioClip)) as AudioClip;
-        //text.text = "Path:" + ls.filepath;
 
-        //clip = Resources.Load("S1 test") as AudioClip;
-        Debug.Log("Filepath: " + ls.filepath);
         clip.LoadAudioData();
+        // Ensures the clip is loaded before we continue.
         do {
-            Debug.Log("Loading Song Clip");
+            
         } while (clip.loadState != AudioDataLoadState.Loaded);
 
+        // Assign the clip to the auto source
         song = GetComponent<AudioSource>();
         song.clip = clip;
 
@@ -100,6 +113,7 @@ public class NoteController : MonoBehaviour {
         song.Play();
     }
 
+    // Create a new note, created from a pre created template, originally alot of information to come from the file but we drew this back, such as long notes.
     private void createNote(string v1, float v2, float v3, int v4, float v5, Note.direction dir, Note.noteType type) {
         GameObject noteGO = GameObject.Instantiate((GameObject)Resources.Load("NotePrefab"));
         noteGO.transform.SetParent(noteHolder.transform);
@@ -108,10 +122,21 @@ public class NoteController : MonoBehaviour {
         
         noteS.initNote(v1, v2, v3, v4, v5, dir, type);
     }
-    float rotSpeed = 0.5f;
+
     // Update is called once per frame
     void Update() {
+        /*if(Input.GetMouseButton(0)) {
+            sphere.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+            //particleSystem.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            //particleSystem.emissionRate = 100.0f;
+        } else {
+            //particleSystem.emissionRate = 0.0f;
+
+            //particleSystem.Stop();
+        }*/
+
+        // Sets the position of the background symbols to move up and down and rotate slowly
         bgMusic.transform.position = new Vector3(bgMusic.transform.position.x, (Mathf.Sin(pos) / 3), bgMusic.transform.position.z);
         bgMusic.transform.Rotate(0, 0, rotSpeed * Time.deltaTime, 0);
         pos += 0.004f;
@@ -120,6 +145,7 @@ public class NoteController : MonoBehaviour {
         if (timeRemaining > interval) {
 
             timeRemaining = 0;
+            // Get a note from the file if its null we dont spawn a note, otherwise spawn note, diffrent speeds for diffrent songs.
             float? note = ls.getNote();
             if (note != null) {
                 if (PlayerPrefs.GetString("song_choice") == "song1") {

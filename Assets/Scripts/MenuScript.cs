@@ -17,7 +17,7 @@ public class MenuScript : MonoBehaviour {
 
     public void sliderValue()   {
         float val = slide.value;
-        Debug.Log(val);
+        //Debug.Log(val);
         resetButtons();
 
         if (val == 0) {
@@ -93,7 +93,7 @@ public class MenuScript : MonoBehaviour {
     public void button1Clicked() {
         audioSource.clip = buttonSound;
         audioSource.Play();
-        Debug.Log("button1Clicked");
+        //Debug.Log("button1Clicked");
         PlayerPrefs.SetString("loading", "load");
         StartCoroutine(loadScene("Loading"));
         
@@ -101,19 +101,19 @@ public class MenuScript : MonoBehaviour {
     public void button2Clicked() {
         audioSource.clip = buttonSound;
         audioSource.Play();
-        Debug.Log("button2Clicked");
+        //Debug.Log("button2Clicked");
         StartCoroutine(loadScene("MKSkin"));
     }
     public void button3Clicked() {
         audioSource.clip = buttonSound;
         audioSource.Play();
-        Debug.Log("button3Clicked");
+        //Debug.Log("button3Clicked");
         StartCoroutine(loadScene("SongSelect"));
     }
     public void button4Clicked() {
         audioSource.clip = buttonSound;
         audioSource.Play();
-        Debug.Log("button4Clicked");
+        //Debug.Log("button4Clicked");
         PlayerPrefs.SetString("loading", "credits");
         StartCoroutine(loadScene("Credits"));
     }

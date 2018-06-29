@@ -53,7 +53,6 @@ public class Note : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             mouseDown = true;
-            Debug.Log(Name+" says this note is down");
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -95,7 +94,7 @@ public class Note : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("triggered");
+        //Debug.Log("triggered");
         touchable = true;
         
     }
@@ -103,7 +102,7 @@ public class Note : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         touchable = false;
-        Debug.Log("remove object");
+        //Debug.Log("remove object");
 
         Destroy(gameObject);
     }
